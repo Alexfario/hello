@@ -1,26 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import NameComponent from './Name';
+
+
+
+class App extends Component {
+    state = {
+        names: [
+            'Vitek',
+            'Michael'
+        ]
+    };
+
+
+    addToHead = name => {
+        this.setState(state => ({
+            names: [name, ...state.names]
+        }))
+    };
+
+    addToTail = name => {
+        this.setState(state => ({
+            names: [...state.names, name]
+        }))
+    };
+
+
+    render() {
+        const { names } = this.state;
+
+        return (
+            <>
+                <button
+                    onClick={() => {this.addToHead('Alex')}}
+                >Add to Head</button>
+                <button
+                    onClick={() => {this.addToTail('Nike')}}
+                >Add to Tail</button>
+            <ul>
+                {names.map((name, index) => <NameComponent
+                    onAddToTaleHandler={this.addToTail}
+
+                    key={name+index}>{name}</NameComponent>)}
+            </ul>
+            </>
+        )
+    }
 }
 
 export default App;
